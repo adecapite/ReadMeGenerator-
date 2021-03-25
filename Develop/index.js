@@ -1,10 +1,22 @@
 // TODO: Include packages needed for this application
+
+const { title } = require('process')
+const generateMarkdown = require('./utils/generateMarkdown.js')
+
+// TODO: Create a function to write README file
+// function writeToFile(fileName, data) 
+// {
+//     inquirer.prompt(data)
+// }
+
+// TODO: Create a function to initialize app
+function init() {
 const fileSystem = require('fs')
 const inquirer = require('inquirer')
-const markdown = require('/Users/anthonydecapite/Desktop/osu-bootcamp/osu-col-fsf-pt-01-2021-u-c/09-NodeJS/02-Homework/Develop/utils')
+const Generatemarkdown = require('./utils/generateMarkdown.js')
 // TODO: Create an array of questions for user input
-const questions = [
-   .prompt({
+inquirer
+   .prompt([{
         type: 'input',
         name: 'title',
         message: "What is your project name ",
@@ -47,17 +59,60 @@ const questions = [
         message: 'WHat is your GitHub username?',
     },
     {
-
+        type: 'input',
+        name: 'email',
+        message: 'whats ya email?',
     }
+    
        
-   ) 
-];
-
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
-
-// TODO: Create a function to initialize app
-function init() {}
+   ])
+   .then((
+    
+   dataEntry) => 
+   {
+        /*
+        {
+           title,
+           description,
+           installation,
+           usage,
+           contribution,
+           testing,
+           license,
+           GitHub,
+           email
+       }
+        */
+    // const data =
+    // [
+    //     {
+    //         title: title,
+    //         description: description,
+    //         installation: installation,
+    //         usage: usage,
+    //         contribution: contribution,
+    //         testing: testing,
+    //         license: license,
+    //         GitHub: GitHub,
+    //         email: email
+    //     }
+    // ];
+    const template = generateMarkdown(dataEntry);
+    // TODO: Create a function to write README file
+function writeToFile(template) 
+{
+    fileSystem.writeFile('README.MD', template,(err) => 
+    {
+        if(err)
+        {
+            console.log(err)
+        }
+        console.log('README has been created')
+    })
+}
+writeToFile(template);
+   }
+   );}
 
 // Function call to initialize app
 init();
